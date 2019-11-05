@@ -1,19 +1,14 @@
-def mercator(v)
-    v = int(-90 + j * 10)
+from math import pi, log, cos, sin, radians, tan
+
+def mercator(v):
     if v < 0:
-        
-
-
-
-    if v == -90:
-        v = -85.05133
-        vrad = radians(v)
-        print(vrad)
+        d = 90 + v
+    if v > 0:
+        d = 90 - v
     if v == 90:
-        v = 85.05133
-        vrad = radians(v)
-        print(vrad)
-    y = float(r * log(cos(vrad / 2) / sin(vrad / 2)) * 1000000 / m)
+        d = 90
+    drad = radians(d)
+    y = float(r * log(cos(drad / 2) / sin(drad / 2)) * 1000000 / m)
 
 print("Vítejte v programu pro výpočet válcových tečných zobrazení!")
 z = input("Zadejte zobrazení: ")
@@ -63,27 +58,28 @@ for i in range(37):
 Rovnobezky = []
 rzelva = []
 yround = ()
-for j in range(18):
+for j in range(19):
     v = int(-90 + j*10)
     vrad = radians(v)
-    y = ()
-    if z == "L" or z == "l":
+    y = float()
+    if z == "L":
         y = float(r * sin(vrad) * 1000000 / m)
-    if z == "A" or z == "a":
+    if z == "A":
         y = float(r * vrad * 1000000 / m)
-    if z == "B" or z == "b":
-        y = float(2 * r * tan(vrad / 2))
-    if z == "M" or z == "m":
-        v = int(-90 + j * 10)
-        if v == -90:
-            v = -85.05133
-            vrad = radians(v)
-            print(vrad)
-        if v == 90:
-            v = 85.05133
-            vrad = radians(v)
-            print(vrad)
-        y = float(r * log(cos(vrad/2)/sin(vrad/2) ) * 1000000 /m)
+    if z == "B":
+        y = float(2 * r * tan(vrad / 2) * 1000000 / m)
+    if z == "M":
+        d = float()
+        if v < 0:
+            d = 90 + v
+        if v > 0:
+            d = 90 - v
+        if v == 0:
+            d = 90
+        if d == 0:
+            d = 4.948871
+        drad = radians(d)
+        y = float(r * log(1/tan(drad/2)) * 1000000 / m)
     yround = round(y,1)
     if abs(y) > 100:
         yround = "-"
@@ -92,8 +88,6 @@ for j in range(18):
     rzelva.append(yround)
 print("Rovnobezky: ", Rovnobezky)
 print("Poledniky: ", Poledniky)
-print(pzelva)
-print(rzelva)
 import turtle
 turtle.speed(10)
 for k in range(18):
