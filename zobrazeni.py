@@ -1,15 +1,3 @@
-from math import pi, log, cos, sin, radians, tan
-
-def mercator(v):
-    if v < 0:
-        d = 90 + v
-    if v > 0:
-        d = 90 - v
-    if v == 90:
-        d = 90
-    drad = radians(d)
-    y = float(r * log(cos(drad / 2) / sin(drad / 2)) * 1000000 / m)
-
 print("Vítejte v programu pro výpočet válcových tečných zobrazení!")
 z = input("Zadejte zobrazení: ")
 correct_z = ("L", "A", "B", "M")
@@ -42,7 +30,7 @@ while True:
         continue
     else:
         break
-from math import pi, log, cos, sin, radians, tan
+from math import log, sin, radians, tan
 Poledniky = []
 pzelva = []
 for i in range(37):
@@ -54,10 +42,9 @@ for i in range(37):
         xround = "-"
     tp = (u, xround)
     Poledniky.append(tp)
-    pzelva.append(xround)
+    pzelva.append(xround*10)
 Rovnobezky = []
 rzelva = []
-yround = ()
 for j in range(19):
     v = int(-90 + j*10)
     vrad = radians(v)
@@ -69,15 +56,11 @@ for j in range(19):
     if z == "B":
         y = float(2 * r * tan(vrad / 2) * 1000000 / m)
     if z == "M":
-        d = float()
-        if v < 0:
-            d = 90 + v
-        if v > 0:
-            d = 90 - v
-        if v == 0:
-            d = 90
+        d = 90-v
         if d == 0:
             d = 4.948871
+        if d == 180:
+            d = 174.948871
         drad = radians(d)
         y = float(r * log(1/tan(drad/2)) * 1000000 / m)
     yround = round(y,1)
@@ -85,27 +68,27 @@ for j in range(19):
         yround = "-"
     tr = (v,yround)
     Rovnobezky.append(tr)
-    rzelva.append(yround)
+    rzelva.append(yround*10)
 print("Rovnobezky: ", Rovnobezky)
 print("Poledniky: ", Poledniky)
-import turtle
-turtle.speed(10)
-for k in range(18):
-    yd = abs(rzelva[k] - rzelva[k+1])*10
-    for l in range(36):
-        xd = abs(pzelva[l] - pzelva[l+1])*10
-        for m in range(2):
-            turtle.forward(xd)
-            turtle.right(90)
-            turtle.forward(yd)
-            turtle.right(90)
-        turtle.forward(xd)
-    turtle.right(90)
-    turtle.forward(yd)
-    turtle.right(90)
-    turtle.forward(abs(max(pzelva)-min(pzelva))*10)
-    turtle.right(180)
-turtle.exitonclick()
+if '----------' in rzelva or '----------' in pzelva:
+    print("Vzdálenosti jsou příliš velké, želvička by to neušla!")
+else:
+    from turtle import speed, penup, pendown, setpos, seth, forward, exitonclick
+    speed(10)
+    for k in range(37):
+        penup()
+        setpos(pzelva[k], rzelva[0])
+        seth(90)
+        pendown()
+        forward(abs(max(rzelva)-min(rzelva)))
+    for l in range(19):
+        penup()
+        setpos(pzelva[0], rzelva[l])
+        seth(0)
+        pendown()
+        forward(abs(max(pzelva) - min(pzelva)))
+    exitonclick()
 
 
 
