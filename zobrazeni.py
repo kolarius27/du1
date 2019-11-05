@@ -32,6 +32,7 @@ while True:
         break
 import math
 Poledniky = []
+pzelva = []
 for i in range(37):
     u = int(-180 + i * 10)
     urad = math.radians(u)
@@ -41,11 +42,15 @@ for i in range(37):
         xround = "-"
     tp = (u, xround)
     Poledniky.append(tp)
+    pzelva.append(xround)
 Rovnobezky = []
+rzelva = []
+yround = ()
 for j in range(19):
     v = int(-90 + j*10)
     vrad = math.radians(v)
     y = ()
+
     if z == "L" or z == "l":
         y = float(r * math.sin(vrad) * 1000000 / m)
     if z == "A" or z == "a":
@@ -53,13 +58,35 @@ for j in range(19):
     if z == "B" or z == "b":
         y = float(2 * r * math.tan(vrad / 2))
     if z == "M" or z == "m":
-        y = float(r * math.log2( 1 / math.tg(vrad/2) ))
+        y = float(r * math.log2( 1 / math.tan(vrad/2) ))
     yround = round(y,1)
     if abs(y) > 100:
         yround = "-"
     tr = (v,yround)
     Rovnobezky.append(tr)
+    rzelva.append(yround)
 print("Rovnobezky: ", Rovnobezky)
 print("Poledniky: ", Poledniky)
+print(pzelva)
+print(rzelva)
+import turtle
+turtle.speed(10)
+for k in range(18):
+    yd = abs(rzelva[k] - rzelva[k+1])*10
+    for l in range(36):
+        xd = abs(pzelva[l] - pzelva[l+1])*10
+        for m in range(2):
+            turtle.forward(xd)
+            turtle.right(90)
+            turtle.forward(yd)
+            turtle.right(90)
+        turtle.forward(xd)
+    turtle.right(90)
+    turtle.forward(yd)
+    turtle.right(90)
+    turtle.forward(abs(max(pzelva)-min(pzelva))*10)
+    turtle.right(180)
+turtle.exitonclick()
+
 
 
