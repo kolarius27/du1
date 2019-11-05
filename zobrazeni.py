@@ -1,3 +1,20 @@
+def mercator(v)
+    v = int(-90 + j * 10)
+    if v < 0:
+        
+
+
+
+    if v == -90:
+        v = -85.05133
+        vrad = radians(v)
+        print(vrad)
+    if v == 90:
+        v = 85.05133
+        vrad = radians(v)
+        print(vrad)
+    y = float(r * log(cos(vrad / 2) / sin(vrad / 2)) * 1000000 / m)
+
 print("Vítejte v programu pro výpočet válcových tečných zobrazení!")
 z = input("Zadejte zobrazení: ")
 correct_z = ("L", "A", "B", "M")
@@ -30,12 +47,12 @@ while True:
         continue
     else:
         break
-import math
+from math import pi, log, cos, sin, radians, tan
 Poledniky = []
 pzelva = []
 for i in range(37):
     u = int(-180 + i * 10)
-    urad = math.radians(u)
+    urad = radians(u)
     x = float(r * urad * 1000000 / m)
     xround = round(x, 1)
     if abs(x) > 100:
@@ -46,19 +63,27 @@ for i in range(37):
 Rovnobezky = []
 rzelva = []
 yround = ()
-for j in range(19):
+for j in range(18):
     v = int(-90 + j*10)
-    vrad = math.radians(v)
+    vrad = radians(v)
     y = ()
-
     if z == "L" or z == "l":
-        y = float(r * math.sin(vrad) * 1000000 / m)
+        y = float(r * sin(vrad) * 1000000 / m)
     if z == "A" or z == "a":
         y = float(r * vrad * 1000000 / m)
     if z == "B" or z == "b":
-        y = float(2 * r * math.tan(vrad / 2))
+        y = float(2 * r * tan(vrad / 2))
     if z == "M" or z == "m":
-        y = float(r * math.log2( 1 / math.tan(vrad/2) ))
+        v = int(-90 + j * 10)
+        if v == -90:
+            v = -85.05133
+            vrad = radians(v)
+            print(vrad)
+        if v == 90:
+            v = 85.05133
+            vrad = radians(v)
+            print(vrad)
+        y = float(r * log(cos(vrad/2)/sin(vrad/2) ) * 1000000 /m)
     yround = round(y,1)
     if abs(y) > 100:
         yround = "-"
