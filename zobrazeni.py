@@ -24,8 +24,8 @@ def vypocet_souradnice_y(v,z,m,r):
     return round(y, 1)
 
 print("Vítejte v programu pro výpočet válcových tečných zobrazení!")
-z = input("Zadejte zobrazení: ")
 correct_z = ("L", "A", "B", "M")
+z = input("Zadejte zobrazení: ")
 while z not in correct_z:
     print("Chybný vstup! Zadej znovu!")
     z = input("Zadejte zobrazení: ")
@@ -33,7 +33,7 @@ m = int()
 while True:
     try:
         m = int(input("Zadejte měřítko: "))
-        while m <= 0:
+        if m <= 0:
             print("Chybný vstup! Zadej znovu!")
             m = int(input("Zadejte měřítko: "))
     except ValueError:
@@ -45,10 +45,10 @@ r = float()
 while True:
     try:
         r = float(input("Zadejte poloměr Země (v km): "))
-        while r < 0:
+        if r < 0:
             print("Chybný vstup! Zadej znovu!")
             r = float(input("Zadejte poloměr Země (v km): "))
-        while r == 0:
+        if r == 0:
             r = 6371.11
     except ValueError:
         print("Chybný vstup! Zadej znovu!")
@@ -88,7 +88,13 @@ print("Poledniky: ", Poledniky)
 while True:
     try:
         yvstup = float(input("Vložte zeměpisnou šířku: "))
+        if yvstup > 90 or yvstup < -90:
+            print("Chybný vstup! Zadej znovu!")
+            yvstup = float(input("Vložte zeměpisnou šířku: "))
         xvstup = float(input("Vložte zeměpisnou délku: "))
+        if xvstup > 180 or xvstup < -180:
+            print("Chybný vstup! Zadej znovu!")
+            xvstup = float(input("Vložte zeměpisnou délku: "))
         souradnice = (yvstup,xvstup)
         ybod = vypocet_souradnice_y(yvstup,z,m,r)
         xbod = vypocet_souradnice_x(xvstup,m,r)
