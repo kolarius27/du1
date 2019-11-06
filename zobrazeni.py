@@ -23,12 +23,19 @@ def vypocet_souradnice_y(v,z,m,r):
         y = float(r * log(1 / tan(drad / 2)) * 1000000 / m)
     return round(y, 1)
 
-print("Vítejte v programu pro výpočet válcových tečných zobrazení!")
-correct_z = ("L", "A", "B", "M")
+print("Vítejte v programu LAMB.exe!\n\n"
+      "Program umožňuje vypočítat souřadnice válcových tečných zobrazení.\n"
+      "Pro výpočet Lambertova zobrazení zadejte písmeno L.\n"
+      "Pro výpočet Marinova zobrazení zadejte písmeno A.\n"
+      "Pro výpočet Mercatorova zobrazení zadejte písmeno M.\n"
+      "Pro výpočet Braunova zobrazení zadejte písmeno B.\n\n")
 z = input("Zadejte zobrazení: ")
+correct_z = ("L", "A", "B", "M")
 while z not in correct_z:
     print("Chybný vstup! Zadej znovu!")
     z = input("Zadejte zobrazení: ")
+
+print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
 m = int()
 while True:
     try:
@@ -41,6 +48,9 @@ while True:
         continue
     else:
         break
+
+print("\nNyní zadejte poloměr referenční koule, se kterým chcete počítat.\n"
+      "Pokud chcete počítat s poloměrem 6371,11 km, stačí zadat hodnotu 0.\n\n")
 r = float()
 while True:
     try:
@@ -55,6 +65,8 @@ while True:
         continue
     else:
         break
+
+
 
 from math import log, sin, radians, tan
 
@@ -82,9 +94,13 @@ for j in range(19):
     Rovnobezky.append(tr)
     rzelva.append(yround*10)
 
-print("Rovnobezky: ", Rovnobezky)
-print("Poledniky: ", Poledniky)
+print("\nZde jsou vypsané souřadnice rovnoběžek a poledníků po 10°. \n"
+      "V kulatých závorkách naleznete zeměpisnou šířku/délku a vypočtenou souřadnici zobrazení.\n")
+print("Rovnoběžky: ", Rovnobezky)
+print("Poledníky: ", Poledniky)
 
+print("\n\nPokud vám toto nestačí, nyní máte možnost vypočítat konkrétní body.\n"
+      "Při zadání bodu (0,0) program přejde na vykreslení souřadnicové sítě želví grafikou.\n")
 while True:
     try:
         yvstup = float(input("Vložte zeměpisnou šířku: "))
@@ -124,5 +140,6 @@ else:
         forward(abs(max(pzelva) - min(pzelva)))
     exitonclick()
 
+print("\nDěkuji za použití programu LAMB.exe, brzy naviděnou!")
 
 
