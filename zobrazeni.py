@@ -92,16 +92,17 @@ for i in range(37):
     u = int(-180 + i * 10)
     xround = vypocet_souradnice_x(u, m, r)
     # Pokud je vzdalenost vetsi nez 1 m, prirazuje se promenne hodnota -
+    # Prirazeni do listu pzelva
     if abs(xround) > 100:
         xround = "-"
     # do tuple se ukladaji dvojice zemepisnych a vypoctenych souradnic
     tp = (u, xround)
     Poledniky.append(tp)
-    # Prirazeni do listu pzelva, osetreni nenasobeni znaku -
-    if xround == "-":
+    if xround == '-':
         pzelva.append(xround)
     else:
-        pzelva.append(xround * 10)
+        pzelva.append(xround*10)
+
 
 # Vytvari se dva listy, Rovnobezky pro nasledny print a rzelva pro turtle graphics
 Rovnobezky = []
@@ -115,7 +116,7 @@ for j in range(19):
         yround = "-"
     tr = (v,yround)
     Rovnobezky.append(tr)
-    if yround == "-":
+    if yround == '-':
         rzelva.append(yround)
     else:
         rzelva.append(yround*10)
@@ -172,6 +173,7 @@ else:
         seth(0)
         pendown()
         forward(abs(max(pzelva) - min(pzelva)))
+
     exitonclick()
 
 print("\nDěkuji za použití programu LAMB.exe, brzy naviděnou!")
