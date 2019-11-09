@@ -96,8 +96,7 @@ for i in range(37):
     if abs(xround) > 100:
         xround = "-"
     # do tuple se ukladaji dvojice zemepisnych a vypoctenych souradnic
-    tp = (u, xround)
-    poledniky.append(tp)
+    poledniky.append(xround)
     if xround == '-':
         pzelva.append(xround)
     else:
@@ -114,8 +113,7 @@ for j in range(19):
     yround = vypocet_souradnice_y(v,z,m,r)
     if abs(yround) > 100:
         yround = "-"
-    tr = (v,yround)
-    rovnobezky.append(tr)
+    rovnobezky.append(yround)
     if yround == '-':
         rzelva.append(yround)
     else:
