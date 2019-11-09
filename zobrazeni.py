@@ -2,31 +2,31 @@ from math import log, sin, radians, tan
 from turtle import speed, penup, pendown, setpos, seth, forward, dot, stamp, color, exitonclick
 
 
-def vypocet_souradnice_x(u,m,r):
+def vypocet_souradnice_x(delka,meritko,polomer_zeme):
     # Prevod vstupu na radiany, vypocet souradnice x a zaokrouhleni na jedno desetinne misto
-    urad = radians(u)
-    x = float(r * urad * 1000000 / m)
+    delka_rad = radians(delka)
+    x = float(polomer_zeme * delka_rad * 1000000 / meritko)
     return round(x, 1)
 
-def vypocet_souradnice_y(v,z,m,r):
+def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
     # Prevod vstupu na radiany a vytvoreni promenne y
-    vrad = radians(v)
+    sirka_rad = radians(sirka)
     y = float()
     # Vypocet promenne y v zavislosti na zadanem parametru z
-    if z == "L":
-        y = float(r * sin(vrad) * 1000000 / m)
-    if z == "A":
-        y = float(r * vrad * 1000000 / m)
-    if z == "B":
-        y = float(2 * r * tan(vrad / 2) * 1000000 / m)
-    if z == "M":
-        d = 90 - v
-        if d < 4.948871:
-            d = 4.948871
-        if d > 175.051129:
-            d = 175.051129
-        drad = radians(d)
-        y = float(r * log(1 / tan(drad / 2)) * 1000000 / m)
+    if zobrazeni == "L":
+        y = float(polomer_zeme * sin(sirka_rad) * 1000000 / meritko)
+    if zobrazeni == "A":
+        y = float(polomer_zeme * sirka_rad * 1000000 / meritko)
+    if zobrazeni == "B":
+        y = float(2 * polomer_zeme * tan(sirka_rad / 2) * 1000000 / meritko)
+    if zobrazeni == "M":
+        doplnek = 90 - sirka_rad
+        if doplnek < 4.948871:
+            doplnek = 4.948871
+        if doplnek > 175.051129:
+            doplnek = 175.051129
+        doplneka_rad = radians(doplnek)
+        y = float(polomer_zeme * log(1 / tan(drad / 2)) * 1000000 / meritko)
     # Vystupem je zaokrouhlena hodnota na jedno desetinne misto
     return round(y, 1)
 
@@ -36,23 +36,23 @@ print("Vítejte v programu zobrazeni.py!\n\n"
       "Pro výpočet Marinova zobrazení zadejte písmeno A.\n"
       "Pro výpočet Mercatorova zobrazení zadejte písmeno M.\n"
       "Pro výpočet Braunova zobrazení zadejte písmeno B.\n\n")
-z = input("Zadejte zobrazení: ")
-correct_z = ("L", "A", "B", "M")
-while z not in correct_z:
+zobrazeni = input("Zadejte zobrazení: ")
+spravne_zobrazeni = ("L", "A", "B", "M")
+while zobrazeni not in spravne_zobrazeni:
     # Pomoci promenne correct_z opakovane vyvola funkci input
     print("Chybný vstup! Zadej znovu!")
-    z = input("Zadejte zobrazení: ")
+    zobrazeni = input("Zadejte zobrazení: ")
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
-m = int()
+meritko = int()
 while True:
     try:
         # Opakovane se vyvolava funkce input
-        m = int(input("Zadejte měřítko: "))
-        while m < 0 or m == 0:
+        meritko = int(input("Zadejte měřítko: "))
+        while meritko < 0 or meritko == 0:
             # Pri vstupu m <= 0 je opet vyvolana funkce input
             print("Chybný vstup! Zadej znovu!")
-            m = int(input("Zadejte měřítko: "))
+            meritko = int(input("Zadejte měřítko: "))
     except ValueError:
         # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
@@ -63,18 +63,18 @@ while True:
 
 print("\nNyní zadejte poloměr referenční koule, se kterým chcete počítat.\n"
       "Pokud chcete počítat s poloměrem 6371,11 km, stačí zadat hodnotu 0.\n\n")
-r = float()
+polomer_zeme = float()
 while True:
     try:
         # Opakovane se vyvolava funkce input
-        r = float(input("Zadejte poloměr Země (v km): "))
-        while r < 0:
+        polomer_zeme = float(input("Zadejte poloměr Země (v km): "))
+        while polomer_zeme < 0:
             # Pri vstupu r < 0 je opet vyvolana funkce input
             print("Chybný vstup! Zadej znovu!")
-            r = float(input("Zadejte poloměr Země (v km): "))
-        while r == 0:
+            polomer_zeme = float(input("Zadejte poloměr Země (v km): "))
+        while polomer_zeme == 0:
             # Pri vstupu r = 0 je promenne prirazena konstanta
-            r = 6371.11
+            polomer_zeme = 6371.11
     except ValueError:
         # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
@@ -89,8 +89,8 @@ pzelva = []
 
 for i in range(37):
     # Generuje poledniky po 10° a nasledne vypocte souradnice x pomoci funkce vypocet_souradnice_x
-    u = int(-180 + i * 10)
-    xround = vypocet_souradnice_x(u, m, r)
+    delka = int(-180 + i * 10)
+    xround = vypocet_souradnice_x(delka, meritko, polomer_zeme)
     # Pokud je vzdalenost vetsi nez 1 m, prirazuje se promenne hodnota -
     # Prirazeni do listu pzelva
     if abs(xround) > 100:
@@ -109,8 +109,8 @@ rzelva = []
 
 for j in range(19):
     # Generuje rovnobezky po 10° a nasledne vypocte souradnice y pomoci funkce vypocet_souradnice_y
-    v = int(-90 + j*10)
-    yround = vypocet_souradnice_y(v,z,m,r)
+    sirka = int(-90 + j*10)
+    yround = vypocet_souradnice_y(sirka,z,meritko,polomer_zeme)
     if abs(yround) > 100:
         yround = "-"
     rovnobezky.append(yround)
@@ -142,9 +142,9 @@ while True:
         # Do promenne souradnice se zapisuji vstupni hodnoty pro mozne skonceni while cycle
         souradnice = (yvstup,xvstup)
         # Vypocet souradnic pomoci vyse vytvorenych funkci
-        ybod = vypocet_souradnice_y(yvstup,z,m,r)
+        ybod = vypocet_souradnice_y(yvstup,zobrazeni,meritko,polomer_zeme)
         bodyY.append(ybod*10)
-        xbod = vypocet_souradnice_x(xvstup,m,r)
+        xbod = vypocet_souradnice_x(xvstup,meritko,polomer_zeme)
         bodyX.append(xbod*10)
         print("Souřadnice hledaného bodu jsou: (", xbod, ",", ybod, ")")
     except ValueError:
@@ -161,25 +161,25 @@ if '-' in rzelva or '-' in pzelva:
 else:
     # Pokud list obsahuje pouze ciselne hodnoty, souradnicova sit je vykreslena
     speed(10)
-    for k in range(37):
+    for i in range(37):
         # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany poledniky
         penup()
-        setpos(pzelva[k], rzelva[0])
+        setpos(pzelva[i], rzelva[0])
         seth(90)
         pendown()
         forward(abs(max(rzelva)-min(rzelva)))
-    for l in range(19):
+    for j in range(19):
         # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
         penup()
-        setpos(pzelva[0], rzelva[l])
+        setpos(pzelva[0], rzelva[j])
         seth(0)
         pendown()
         forward(abs(max(pzelva) - min(pzelva)))
-    for m in range(len(bodyX)):
+    for k in range(len(bodyX)):
         # Zelva vyznaci konkretni body vyhledane uzivatelem modrou teckou
         speed(1)
         penup()
-        setpos(bodyX[m], bodyY[m])
+        setpos(bodyX[k], bodyY[k])
         pendown()
         dot(10, "blue")
     exitonclick()
