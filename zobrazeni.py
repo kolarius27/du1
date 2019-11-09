@@ -5,20 +5,20 @@ from turtle import speed, penup, pendown, setpos, seth, forward, dot, stamp, col
 def vypocet_souradnice_x(delka,meritko,polomer_zeme):
     # Prevod vstupu na radiany, vypocet souradnice x a zaokrouhleni na jedno desetinne misto
     delka_rad = radians(delka)
-    x = float(polomer_zeme * delka_rad * 1000000 / meritko)
-    return round(x, 1)
+    souradnice_x = float(polomer_zeme * delka_rad * 1000000 / meritko)
+    return round(souradnice_x, 1)
 
 def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
     # Prevod vstupu na radiany a vytvoreni promenne y
     sirka_rad = radians(sirka)
-    y = float()
+    souradnice_y = float()
     # Vypocet promenne y v zavislosti na zadanem parametru z
     if zobrazeni == "L":
-        y = float(polomer_zeme * sin(sirka_rad) * 1000000 / meritko)
+        souradnice_y = float(polomer_zeme * sin(sirka_rad) * 1000000 / meritko)
     if zobrazeni == "A":
-        y = float(polomer_zeme * sirka_rad * 1000000 / meritko)
+        souradnice_y = float(polomer_zeme * sirka_rad * 1000000 / meritko)
     if zobrazeni == "B":
-        y = float(2 * polomer_zeme * tan(sirka_rad / 2) * 1000000 / meritko)
+        souradnice_y = float(2 * polomer_zeme * tan(sirka_rad / 2) * 1000000 / meritko)
     if zobrazeni == "M":
         doplnek = 90 - sirka_rad
         if doplnek < 4.948871:
@@ -26,9 +26,9 @@ def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
         if doplnek > 175.051129:
             doplnek = 175.051129
         doplneka_rad = radians(doplnek)
-        y = float(polomer_zeme * log(1 / tan(drad / 2)) * 1000000 / meritko)
+        souradnice_y = float(polomer_zeme * log(1 / tan(drad / 2)) * 1000000 / meritko)
     # Vystupem je zaokrouhlena hodnota na jedno desetinne misto
-    return round(y, 1)
+    return round(souradnice_y, 1)
 
 print("Vítejte v programu zobrazeni.py!\n\n"
       "Program umožňuje vypočítat souřadnice válcových tečných zobrazení.\n"
@@ -110,7 +110,7 @@ rzelva = []
 for j in range(19):
     # Generuje rovnobezky po 10° a nasledne vypocte souradnice y pomoci funkce vypocet_souradnice_y
     sirka = int(-90 + j*10)
-    yround = vypocet_souradnice_y(sirka,z,meritko,polomer_zeme)
+    yround = vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme)
     if abs(yround) > 100:
         yround = "-"
     rovnobezky.append(yround)
@@ -140,7 +140,7 @@ while True:
             print("Chybný vstup! Zadej znovu!")
             xvstup = float(input("Vložte zeměpisnou délku: "))
         # Do promenne souradnice se zapisuji vstupni hodnoty pro mozne skonceni while cycle
-        souradnice = (yvstup,xvstup)
+        souradnice_xy = (yvstup,xvstup)
         # Vypocet souradnic pomoci vyse vytvorenych funkci
         ybod = vypocet_souradnice_y(yvstup,zobrazeni,meritko,polomer_zeme)
         bodyY.append(ybod*10)
@@ -151,7 +151,7 @@ while True:
         # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
         continue
-    if souradnice == (0.0, 0.0):
+    if souradnice_xy == (0.0, 0.0):
         # While cycle je ukoncen vstupnimi hodnotami 0, 0
         break
 
