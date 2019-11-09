@@ -83,8 +83,8 @@ while True:
         # Pri korektnim vstupu program ukonci while cycle
         break
 
-# Vytvari se dva listy, Poledniky pro nasledny print a pzelva pro turtle graphics
-Poledniky = []
+# Vytvari se dva listy, poledniky pro nasledny print a pzelva pro turtle graphics
+poledniky = []
 pzelva = []
 
 for i in range(37):
@@ -97,15 +97,15 @@ for i in range(37):
         xround = "-"
     # do tuple se ukladaji dvojice zemepisnych a vypoctenych souradnic
     tp = (u, xround)
-    Poledniky.append(tp)
+    poledniky.append(tp)
     if xround == '-':
         pzelva.append(xround)
     else:
         pzelva.append(xround*10)
 
 
-# Vytvari se dva listy, Rovnobezky pro nasledny print a rzelva pro turtle graphics
-Rovnobezky = []
+# Vytvari se dva listy, rovnobezky pro nasledny print a rzelva pro turtle graphics
+rovnobezky = []
 rzelva = []
 
 for j in range(19):
@@ -115,7 +115,7 @@ for j in range(19):
     if abs(yround) > 100:
         yround = "-"
     tr = (v,yround)
-    Rovnobezky.append(tr)
+    rovnobezky.append(tr)
     if yround == '-':
         rzelva.append(yround)
     else:
@@ -123,8 +123,8 @@ for j in range(19):
 
 print("\nZde jsou vypsané souřadnice rovnoběžek a poledníků po 10°. \n"
       "V kulatých závorkách naleznete zeměpisnou šířku/délku a vypočtenou souřadnici zobrazení.\n")
-print("Rovnoběžky: ", Rovnobezky)
-print("Poledníky: ", Poledniky)
+print("Rovnoběžky: ", rovnobezky)
+print("Poledníky: ", poledniky)
 
 print("\n\nPokud vám toto nestačí, nyní máte možnost vypočítat konkrétní body.\n"
       "Při zadání bodu (0,0) program přejde na vykreslení souřadnicové sítě želví grafikou.\n")
