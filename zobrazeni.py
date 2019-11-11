@@ -15,15 +15,15 @@ def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
     # Vypocet promenne y v zavislosti na zadanem parametru z
     if zobrazeni == "L":
         souradnice_y = float(polomer_zeme * sin(sirka_rad) * 1000000 / meritko)
-    if zobrazeni == "A":
+    elif zobrazeni == "A":
         souradnice_y = float(polomer_zeme * sirka_rad * 1000000 / meritko)
-    if zobrazeni == "B":
+    elif zobrazeni == "B":
         souradnice_y = float(2 * polomer_zeme * tan(sirka_rad / 2) * 1000000 / meritko)
-    if zobrazeni == "M":
+    elif zobrazeni == "M":
         doplnek = 90 - sirka_rad
         if doplnek < 4.948871:
             doplnek = 4.948871
-        if doplnek > 175.051129:
+        elif doplnek > 175.051129:
             doplnek = 175.051129
         doplneka_rad = radians(doplnek)
         souradnice_y = float(polomer_zeme * log(1 / tan(drad / 2)) * 1000000 / meritko)
@@ -68,11 +68,11 @@ while True:
     try:
         # Opakovane se vyvolava funkce input
         polomer_zeme = float(input("Zadejte poloměr Země (v km): "))
-        while polomer_zeme < 0:
+        if polomer_zeme < 0:
             # Pri vstupu r < 0 je opet vyvolana funkce input
             print("Chybný vstup! Zadej znovu!")
             polomer_zeme = float(input("Zadejte poloměr Země (v km): "))
-        while polomer_zeme == 0:
+        elif polomer_zeme == 0:
             # Pri vstupu r = 0 je promenne prirazena konstanta
             polomer_zeme = 6371.11
     except ValueError:
