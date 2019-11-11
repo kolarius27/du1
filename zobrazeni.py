@@ -25,8 +25,8 @@ def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
             doplnek = 4.948871
         elif doplnek > 175.051129:
             doplnek = 175.051129
-        doplneka_rad = radians(doplnek)
-        souradnice_y = float(polomer_zeme * log(1 / tan(drad / 2)) * 1000000 / meritko)
+        doplnek_rad = radians(doplnek)
+        souradnice_y = float(polomer_zeme * log(1 / tan(doplnek_rad / 2)) * 1000000 / meritko)
     # Vystupem je zaokrouhlena hodnota na jedno desetinne misto
     return round(souradnice_y, 1)
 
@@ -44,22 +44,31 @@ while zobrazeni not in spravne_zobrazeni:
     zobrazeni = input("Zadejte zobrazení: ")
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
-meritko = int()
+
 while True:
     try:
-        # Opakovane se vyvolava funkce input
         meritko = int(input("Zadejte měřítko: "))
-        while meritko < 0 or meritko == 0:
-            # Pri vstupu m <= 0 je opet vyvolana funkce input
+        if meritko < 0 or meritko == 0:
             print("Chybný vstup! Zadej znovu!")
-            meritko = int(input("Zadejte měřítko: "))
+            continue
+        break
     except ValueError:
-        # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
         continue
-    else:
-        # Pri korektnim vstupu program ukonci while cycle
-        break
+
+#while True:
+#    try:
+#        # Opakovane se vyvolava funkce input
+#        while meritko < 0 or meritko == 0:
+#            # Pri vstupu m <= 0 je opet vyvolana funkce input
+#            print("Chybný vstup! Zadej znovu!")
+#           meritko = int(input("Zadejte měřítko: "))
+ #   except ValueError:
+  #      # Pri neciselnem vstupu je opet vyvolana funkce input
+#        continue
+ #   else:
+  #      # Pri korektnim vstupu program ukonci while cycle
+   #     break
 
 print("\nNyní zadejte poloměr referenční koule, se kterým chcete počítat.\n"
       "Pokud chcete počítat s poloměrem 6371,11 km, stačí zadat hodnotu 0.\n\n")
@@ -75,13 +84,12 @@ while True:
         elif polomer_zeme == 0:
             # Pri vstupu r = 0 je promenne prirazena konstanta
             polomer_zeme = 6371.11
+        # Pri korektnim vstupu program ukonci while cycle
+        break
     except ValueError:
         # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
         continue
-    else:
-        # Pri korektnim vstupu program ukonci while cycle
-        break
 
 # Vytvari se dva listy, poledniky pro nasledny print a pzelva pro turtle graphics
 poledniky = []
