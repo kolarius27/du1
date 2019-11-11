@@ -40,18 +40,20 @@ print("Vítejte v programu zobrazeni.py!\n\n"
 zobrazeni = input("Zadejte zobrazení: ")
 spravne_zobrazeni = ("L", "A", "B", "M")
 while zobrazeni not in spravne_zobrazeni:
-    # Pomoci promenne correct_z opakovane vyvola funkci input
+    # Pomoci promenne spravne_zobrazeni opakovane vyvola funkci input
     print("Chybný vstup! Zadej znovu!")
     zobrazeni = input("Zadejte zobrazení: ")
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
 meritko = int()
 while True:
+    # opakovane vyvolava input, pokud je vstup neciselny nebo <= 0
     try:
         meritko = int(input("Zadejte měřítko: "))
-        if meritko < 0 or meritko == 0:
+        if meritko <= 0:
             print("Chybný vstup! Zadej znovu!")
             continue
+        # pokud je vstup korektni, vyskakuje z cyklu
         break
     except ValueError:
         print("Chybný vstup! Zadej znovu!")
@@ -86,17 +88,10 @@ for i in range(37):
     delka = int(-180 + i * 10)
     xround = vypocet_souradnice_x(delka, meritko, polomer_zeme)
     # Prirazeni do listu pzelva
-
-    # Pokud je vzdalenost vetsi nez 1 m, prirazuje se promenne hodnota -
-    if xround > 100:
-        pzelva.append(1000)
+    pzelva.append(xround * 10)
+    # Pokud je vzdalenost vetsi nez 1 m, prirazuje se promenne xround hodnota -
+    if abs(xround) > 100:
         xround = "-"
-    elif xround < -100:
-        pzelva.append(-1000)
-        xround = "-"
-    else:
-        pzelva.append(xround * 10)
-    # do tuple se ukladaji dvojice zemepisnych a vypoctenych souradnic
     poledniky.append(xround)
 
 
@@ -107,14 +102,15 @@ for j in range(19):
     # Generuje rovnobezky po 10° a nasledne vypocte souradnice y pomoci funkce vypocet_souradnice_y
     sirka = int(-90 + j*10)
     yround = vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme)
-    if yround > 100:
-        rzelva.append(1000)
-        yround = "-"
-    elif yround < -100:
-        rzelva.append(-1000)
-        yround = "-"
+    # Prirazeni do listu pzelva, osetruji se nekonecna u Mercatorova zobrazeni
+    if yround == inf:
+        rzelva.append(vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme) * 10)
+    elif yround == -inf:
+        rzelva.append(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme) * 10)
     else:
         rzelva.append(yround * 10)
+    if abs(yround) > 100:
+        yround = "-"
     rovnobezky.append(yround)
 
 
@@ -141,25 +137,16 @@ while True:
             xvstup = float(input("Vložte zeměpisnou délku: "))
         # Do promenne souradnice se zapisuji vstupni hodnoty pro mozne skonceni while cycle
         souradnice_xy = (yvstup,xvstup)
-        # Vypocet souradnic pomoci vyse vytvorenych funkci
+        # Vypocet souradnic pomoci vyse vytvorenych funkci, osetruji se nekonecna u Mercatorova zobrazeni
         ybod = vypocet_souradnice_y(yvstup,zobrazeni,meritko,polomer_zeme)
         if ybod == inf:
             bodyY.append(vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme)*10)
         elif ybod == -inf:
             bodyY.append(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)*10)
-        elif ybod > 100:
-            bodyY.append(1000)
-        elif ybod < -100:
-            bodyY.append(-1000)
         else:
             bodyY.append(ybod * 10)
         xbod = vypocet_souradnice_x(xvstup,meritko,polomer_zeme)
-        if xbod > 100:
-            bodyX.append(1000)
-        elif xbod < -100:
-            bodyX.append(-1000)
-        else:
-            bodyX.append(xbod * 10)
+        bodyX.append(xbod * 10)
         print("Souřadnice hledaného bodu jsou: (", xbod, ",", ybod, ")")
     except ValueError:
         # Pri neciselnem vstupu je opet vyvolana funkce input
@@ -169,32 +156,22 @@ while True:
         # While cycle je ukoncen vstupnimi hodnotami 0, 0
         break
 
-print(bodyX)
-print(bodyY)
-
-
 # Nakonec je vykreslena souradnicova sit pomoci zelvi grafiky
 speed(10)
-delka_poledniku = abs(max(rzelva) - min(rzelva))*10
-if zobrazeni == "M":
-    delka_poledniku = abs(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)
-                          - vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme)) * 10
-delka_rovnobezky = abs(max(pzelva) - min(pzelva)) * 10
-screensize(delka_poledniku + 100, delka_rovnobezky + 100)
+# Promenne delka_poledniku a delka_rovnobezky jsou samodefinujici
+delka_poledniku = abs(max(rzelva) - min(rzelva))
+delka_rovnobezky = abs(max(pzelva) - min(pzelva))
+# Pomoci screensize se vygeneruje dostatecne velke okno
+screensize(delka_rovnobezky + 100, delka_poledniku + 100)
 for i in range(37):
-    # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany poledniky
+
     penup()
     pencolor("black")
-    delka_poledniku = abs(max(rzelva) - min(rzelva))
     if i == 18:
+        # nulty polednik je zobrazen cervene
         pencolor("red")
-    if zobrazeni == "M":
-        setpos(pzelva[i], vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)*10)
-    elif delka_poledniku > 1000:
-        delka_poledniku = 1000
-        setpos(pzelva[i], -500)
-    else:
-        setpos(pzelva[i], rzelva[0])
+    # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany poledniky
+    setpos(pzelva[i], rzelva[0])
     seth(90)
     pendown()
     forward(delka_poledniku)
@@ -203,8 +180,10 @@ for j in range(19):
     penup()
     pencolor("black")
     if j == 9:
+        # rovnik je zobrazen cervene
         pencolor("red")
     if zobrazeni != "M" and j != 0 or j != 19:
+        # u Mercatora se nevykresluji poly
         setpos(pzelva[0], rzelva[j])
         seth(0)
         pendown()
