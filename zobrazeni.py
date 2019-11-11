@@ -1,5 +1,5 @@
 from math import log, sin, radians, tan, inf
-from turtle import speed, penup, pendown, setpos, seth, forward, dot, pencolor, exitonclick
+from turtle import speed, penup, pendown, setpos, seth, forward, dot, pencolor, screensize, exitonclick
 
 
 def vypocet_souradnice_x(delka,meritko,polomer_zeme):
@@ -88,10 +88,10 @@ for i in range(37):
     # Prirazeni do listu pzelva
 
     # Pokud je vzdalenost vetsi nez 1 m, prirazuje se promenne hodnota -
-    if xround > 100 or xround == inf:
+    if xround > 100:
         pzelva.append(1000)
         xround = "-"
-    elif xround < -100 or xround == -inf:
+    elif xround < -100:
         pzelva.append(-1000)
         xround = "-"
     else:
@@ -107,10 +107,10 @@ for j in range(19):
     # Generuje rovnobezky po 10° a nasledne vypocte souradnice y pomoci funkce vypocet_souradnice_y
     sirka = int(-90 + j*10)
     yround = vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme)
-    if yround >= 100 or yround == inf:
+    if yround > 100:
         rzelva.append(1000)
         yround = "-"
-    elif yround <= -100 or yround == -inf:
+    elif yround < -100:
         rzelva.append(-1000)
         yround = "-"
     else:
@@ -123,8 +123,6 @@ print("\nZde jsou vypsané souřadnice rovnoběžek a poledníků po 10°. \n"
       "V kulatých závorkách naleznete zeměpisnou šířku/délku a vypočtenou souřadnici zobrazení.\n")
 print("Rovnoběžky: ", rovnobezky)
 print("Poledníky: ", poledniky)
-print(rzelva)
-print(pzelva)
 
 print("\n\nPokud vám toto nestačí, nyní máte možnost vypočítat konkrétní body.\n"
       "Při zadání bodu (0,0) program přejde na vykreslení souřadnicové sítě želví grafikou.\n")
@@ -145,19 +143,23 @@ while True:
         souradnice_xy = (yvstup,xvstup)
         # Vypocet souradnic pomoci vyse vytvorenych funkci
         ybod = vypocet_souradnice_y(yvstup,zobrazeni,meritko,polomer_zeme)
-        if ybod > 100 or ybod == inf:
+        if ybod == inf:
+            bodyY.append(vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme)*10)
+        elif ybod == -inf:
+            bodyY.append(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)*10)
+        elif ybod > 100:
             bodyY.append(1000)
-        elif ybod < -100 or ybod == -inf:
+        elif ybod < -100:
             bodyY.append(-1000)
         else:
-            bodyY.append(ybod*10)
+            bodyY.append(ybod * 10)
         xbod = vypocet_souradnice_x(xvstup,meritko,polomer_zeme)
-        if xbod > 100 or xbod == inf:
+        if xbod > 100:
             bodyX.append(1000)
-        elif xbod < -100 or xbod == -inf:
+        elif xbod < -100:
             bodyX.append(-1000)
         else:
-            bodyX.append(ybod * 10)
+            bodyX.append(xbod * 10)
         print("Souřadnice hledaného bodu jsou: (", xbod, ",", ybod, ")")
     except ValueError:
         # Pri neciselnem vstupu je opet vyvolana funkce input
@@ -167,10 +169,18 @@ while True:
         # While cycle je ukoncen vstupnimi hodnotami 0, 0
         break
 
+print(bodyX)
+print(bodyY)
 
 
 # Nakonec je vykreslena souradnicova sit pomoci zelvi grafiky
 speed(10)
+delka_poledniku = abs(max(rzelva) - min(rzelva))*10
+if zobrazeni == "M":
+    delka_poledniku = abs(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)
+                          - vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme)) * 10
+delka_rovnobezky = abs(max(pzelva) - min(pzelva)) * 10
+screensize(delka_poledniku + 100, delka_rovnobezky + 100)
 for i in range(37):
     # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany poledniky
     penup()
@@ -178,14 +188,13 @@ for i in range(37):
     delka_poledniku = abs(max(rzelva) - min(rzelva))
     if i == 18:
         pencolor("red")
-    setpos(pzelva[i], rzelva[0])
-    if delka_poledniku > 1000:
+    if zobrazeni == "M":
+        setpos(pzelva[i], vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)*10)
+    elif delka_poledniku > 1000:
         delka_poledniku = 1000
         setpos(pzelva[i], -500)
-    if zobrazeni == "M":
-        delka_poledniku = abs(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)
-                              - vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme))*10
-        setpos(pzelva[i], vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)*10)
+    else:
+        setpos(pzelva[i], rzelva[0])
     seth(90)
     pendown()
     forward(delka_poledniku)
@@ -193,14 +202,10 @@ for j in range(19):
     # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
     penup()
     pencolor("black")
-    delka_rovnobezky = abs(max(pzelva) - min(pzelva))
     if j == 9:
         pencolor("red")
-    setpos(pzelva[0], rzelva[j])
-    if delka_rovnobezky > 1000:
-        delka_rovnobezky = 1000
-        setpos(-500, rzelva[j])
     if zobrazeni != "M" and j != 0 or j != 19:
+        setpos(pzelva[0], rzelva[j])
         seth(0)
         pendown()
         forward(delka_rovnobezky)
@@ -208,16 +213,11 @@ for k in range(len(bodyX)):
     # Zelva vyznaci konkretni body vyhledane uzivatelem modrou teckou
     speed(1)
     penup()
-    if abs(bodyX[k]) < 1000 or abs(bodyY[k]) < 1000:
-        setpos(bodyX[k], bodyY[k])
-        pendown()
-        dot(10, "blue")
+    setpos(bodyX[k], bodyY[k])
+    pendown()
+    dot(10, "blue")
 exitonclick()
 
-print(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme))
-print(vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme))
-print(abs(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)
-                              - vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme)))
 print("\nDěkuji za použití programu zobrazeni.py, brzy naviděnou!")
 
 
