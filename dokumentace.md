@@ -1,6 +1,6 @@
-# Domácí úkol 1 - zobrazení
+# zobrazení.py
 
-## Zadání
+## Co program dělá?
 
 Tento program pro zvolené zobrazení, měřítko a poloměr vypíše souřadnice rovnoběžek
 a poledníků. Uvažují se pouze válcová tečná zobrazení, a to Marinovo, Lambertovo, 
@@ -15,11 +15,11 @@ konkrétních bodů a vykreslení souřadnicové sítě želví grafikou.
 Program se uživatele nejdříve ptá na typ zobrazení. Při zadání jiného znaku (či
 řetězci znaků) než "L" (Lambertovo zobrazení), "A" (Marinovo z.), "M" (Mercatorovo
 z.) nebo "B" (Braunovo z.) je uživatel opět dotazován. Při korektním vstupu je 
-ukončen "while cyklus".
+dotazování ukončeno.
 
 Dále se vkládá měřítko. Když je vstupní hodnota v intervalu (-inf;0>, nebo je dokonce
 vstup nečíselný, je uživatel dotazován znovu. Při korektním vstupu je 
-ukončen "while cyklus" a program pokračuje dále.
+dotazování ukončeno a program pokračuje dále.
 
 Posledním vstupem je poloměr Země. Při zadání záporné hodnoty či nečíselného vstupu
 je potřeba zadat vstup znovu. Při zadání hodnoty "0" se proměnné automaticky přidělí
@@ -34,7 +34,7 @@ Uživatel má možnost také nechat vypsat souřadnice konkrétních bodů dle j
 Pokud je zadaná hodnota nečíselná nebo mimo definiční obor (<-90;90> u zeměpisné šířky,
 <-180;180> u zeměpisné délky), uživatel je opět dotazován. Při korektních vstupech
 jsou zobrazeny souřadnice hledaného bodu a program se uživatele ptá, jaký bod chce
-vypočítat tentokrát. Při zadání hodnot (0, 0) program vyskočí z "while cyklu".
+vypočítat tentokrát. Při zadání hodnot (0, 0) je dotazování ukončeno.
 
 Nakonec se uživateli vykreslí želví grafikou souřadnicová síť, kdy 1 mm = 1 px.
 Pokud uživatel vypočítal nějaké konkrétní body, budou na výsledné souřadnicové síti 
