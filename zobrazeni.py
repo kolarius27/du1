@@ -45,7 +45,7 @@ while zobrazeni not in spravne_zobrazeni:
     zobrazeni = input("Zadejte zobrazení: ")
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
-meritko = int()
+meritko = 0
 while True:
     # opakovane vyvolava input, pokud je vstup neciselny nebo <= 0
     try:
@@ -164,7 +164,6 @@ delka_rovnobezky = abs(max(pzelva) - min(pzelva))
 # Pomoci screensize se vygeneruje dostatecne velke okno
 screensize(delka_rovnobezky + 100, delka_poledniku + 100)
 for i in range(37):
-
     penup()
     pencolor("black")
     if i == 18:
