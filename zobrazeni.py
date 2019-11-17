@@ -8,6 +8,7 @@ def vypocet_souradnice_x(delka, meritko, polomer_zeme):
     souradnice_x = float(polomer_zeme * delka_rad * 100000 / meritko)
     return round(souradnice_x, 1)
 
+
 def vypocet_souradnice_y(sirka, zobrazeni, meritko, polomer_zeme):
     # Prevod vstupu na radiany a vytvoreni promenne souradnice_y
     sirka_rad = radians(sirka)
@@ -31,13 +32,47 @@ def vypocet_souradnice_y(sirka, zobrazeni, meritko, polomer_zeme):
     # Vystupem je zaokrouhlena hodnota na jedno desetinne misto
     return round(souradnice_y, 1)
 
-def vypocet_souradnic(pocet_souradnic, interval, x_nebo_y, zobrazeni, meritko, polomer_zeme):
-    for i in range(pocet_souradnic):
-        if x_nebo_y == "x":
-            delka = (-180 + i*interval)
-            vypocet_souradnice_x(delka, meritko, polomer_zeme)
-        if x_nebo_y == "y":
-            sirka
+
+def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
+    speed(10)
+    # Promenne delka_poledniku a delka_rovnobezky jsou samodefinujici
+    delka_poledniku = abs(max(rzelva) - min(rzelva))
+    delka_rovnobezky = abs(max(pzelva) - min(pzelva))
+    # Pomoci screensize se vygeneruje dostatecne velke okno
+    screensize(delka_rovnobezky + 100, delka_poledniku + 100)
+    for i in range(37):
+        penup()
+        pencolor("black")
+        if i == 18:
+            # nulty polednik je zobrazen cervene
+            pencolor("red")
+        # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany poledniky
+        setpos(pzelva[i], rzelva[0])
+        seth(90)
+        pendown()
+        forward(delka_poledniku)
+    for j in range(19):
+        # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
+        penup()
+        pencolor("black")
+        if j == 9:
+            # rovnik je zobrazen cervene
+            pencolor("red")
+        if zobrazeni != "M" and j != 0 or j != 19:
+            # u Mercatora se nevykresluji poly
+            setpos(pzelva[0], rzelva[j])
+            seth(0)
+            pendown()
+            forward(delka_rovnobezky)
+    for k in range(len(bodyX)):
+        # Zelva vyznaci konkretni body vyhledane uzivatelem modrou teckou
+        speed(1)
+        penup()
+        setpos(bodyX[k], bodyY[k])
+        pendown()
+        dot(10, "blue")
+    exitonclick()
+
 
 print("Vítejte v programu zobrazeni.py!\n\n"
       "Program umožňuje vypočítat souřadnice válcových tečných zobrazení.\n"
@@ -51,6 +86,7 @@ while zobrazeni not in spravne_zobrazeni:
     # Pomoci promenne spravne_zobrazeni opakovane vyvola funkci input
     print("Chybný vstup! Zadej znovu!")
     zobrazeni = input("Zadejte zobrazení: ")
+
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
 meritko = 0
@@ -66,6 +102,7 @@ while True:
     except ValueError:
         print("Chybný vstup! Zadej znovu!")
         continue
+
 
 print("\nNyní zadejte poloměr referenční koule, se kterým chcete počítat.\n"
       "Pokud chcete počítat s poloměrem 6371,11 km, stačí zadat hodnotu 0.\n\n")
@@ -87,6 +124,7 @@ while True:
         # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
         continue
+
 
 # Vytvari se list poledniky pro nasledny print a pzelva pro turtle graphics
 poledniky = []
@@ -120,7 +158,6 @@ for j in range(19):
     if abs(yround) > 100:
         yround = "-"
     rovnobezky.append(yround)
-
 
 
 print("\nZde jsou vypsané souřadnice rovnoběžek a poledníků po 10°. \n"
@@ -165,44 +202,7 @@ while True:
         break
 
 # Nakonec je vykreslena souradnicova sit pomoci zelvi grafiky
-speed(10)
-# Promenne delka_poledniku a delka_rovnobezky jsou samodefinujici
-delka_poledniku = abs(max(rzelva) - min(rzelva))
-delka_rovnobezky = abs(max(pzelva) - min(pzelva))
-# Pomoci screensize se vygeneruje dostatecne velke okno
-screensize(delka_rovnobezky + 100, delka_poledniku + 100)
-for i in range(37):
-    penup()
-    pencolor("black")
-    if i == 18:
-        # nulty polednik je zobrazen cervene
-        pencolor("red")
-    # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany poledniky
-    setpos(pzelva[i], rzelva[0])
-    seth(90)
-    pendown()
-    forward(delka_poledniku)
-for j in range(19):
-    # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
-    penup()
-    pencolor("black")
-    if j == 9:
-        # rovnik je zobrazen cervene
-        pencolor("red")
-    if zobrazeni != "M" and j != 0 or j != 19:
-        # u Mercatora se nevykresluji poly
-        setpos(pzelva[0], rzelva[j])
-        seth(0)
-        pendown()
-        forward(delka_rovnobezky)
-for k in range(len(bodyX)):
-    # Zelva vyznaci konkretni body vyhledane uzivatelem modrou teckou
-    speed(1)
-    penup()
-    setpos(bodyX[k], bodyY[k])
-    pendown()
-    dot(10, "blue")
-exitonclick()
+vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni)
 
 print("\nDěkuji za použití programu zobrazeni.py, brzy naviděnou!")
 
