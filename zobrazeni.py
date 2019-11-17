@@ -2,23 +2,23 @@ from math import log, sin, radians, tan, inf
 from turtle import speed, penup, pendown, setpos, seth, forward, dot, pencolor, screensize, exitonclick
 
 
-def vypocet_souradnice_x(delka,meritko,polomer_zeme):
-    # Prevod vstupu na radiany, vypocet souradnice x a zaokrouhleni na jedno desetinne misto
+def vypocet_souradnice_x(delka, meritko, polomer_zeme):
+    # Prevod vstupu na radiany, vypocet souradnice_x a zaokrouhleni na jedno desetinne misto
     delka_rad = radians(delka)
-    souradnice_x = float(polomer_zeme * delka_rad * 1000000 / meritko)
+    souradnice_x = float(polomer_zeme * delka_rad * 100000 / meritko)
     return round(souradnice_x, 1)
 
-def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
-    # Prevod vstupu na radiany a vytvoreni promenne y
+def vypocet_souradnice_y(sirka, zobrazeni, meritko, polomer_zeme):
+    # Prevod vstupu na radiany a vytvoreni promenne souradnice_y
     sirka_rad = radians(sirka)
     souradnice_y = float()
-    # Vypocet promenne y v zavislosti na zadanem parametru z
+    # Vypocet promenne souradnice_y v zavislosti na zadanem parametru zobrazeni
     if zobrazeni == "L":
-        souradnice_y = float(polomer_zeme * sin(sirka_rad) * 1000000 / meritko)
+        souradnice_y = float(polomer_zeme * sin(sirka_rad) * 100000 / meritko)
     elif zobrazeni == "A":
-        souradnice_y = float(polomer_zeme * sirka_rad * 1000000 / meritko)
+        souradnice_y = float(polomer_zeme * sirka_rad * 100000 / meritko)
     elif zobrazeni == "B":
-        souradnice_y = float(2 * polomer_zeme * tan(sirka_rad / 2) * 1000000 / meritko)
+        souradnice_y = float(2 * polomer_zeme * tan(sirka_rad / 2) * 100000 / meritko)
     elif zobrazeni == "M":
         doplnek = 90 - sirka
         doplnek_rad = radians(doplnek)
@@ -27,9 +27,17 @@ def vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme):
         elif doplnek == 180:
             souradnice_y = -inf
         else:
-            souradnice_y = float(polomer_zeme * log(1 / tan(doplnek_rad / 2)) * 1000000 / meritko)
+            souradnice_y = float(polomer_zeme * log(1 / tan(doplnek_rad / 2)) * 100000 / meritko)
     # Vystupem je zaokrouhlena hodnota na jedno desetinne misto
     return round(souradnice_y, 1)
+
+def vypocet_souradnic(pocet_souradnic, interval, x_nebo_y, zobrazeni, meritko, polomer_zeme):
+    for i in range(pocet_souradnic):
+        if x_nebo_y == "x":
+            delka = (-180 + i*interval)
+            vypocet_souradnice_x(delka, meritko, polomer_zeme)
+        if x_nebo_y == "y":
+            sirka
 
 print("Vítejte v programu zobrazeni.py!\n\n"
       "Program umožňuje vypočítat souřadnice válcových tečných zobrazení.\n"
@@ -45,7 +53,7 @@ while zobrazeni not in spravne_zobrazeni:
     zobrazeni = input("Zadejte zobrazení: ")
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
-meritko = int()
+meritko = 0
 while True:
     # opakovane vyvolava input, pokud je vstup neciselny nebo <= 0
     try:
@@ -101,7 +109,7 @@ rzelva = []
 for j in range(19):
     # Generuje rovnobezky po 10° a nasledne vypocte souradnice y pomoci funkce vypocet_souradnice_y
     sirka = int(-90 + j*10)
-    yround = vypocet_souradnice_y(sirka,zobrazeni,meritko,polomer_zeme)
+    yround = vypocet_souradnice_y(sirka, zobrazeni, meritko, polomer_zeme)
     # Prirazeni do listu pzelva, osetruji se nekonecna u Mercatorova zobrazeni
     if yround == inf:
         rzelva.append(vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme) * 10)
@@ -164,7 +172,6 @@ delka_rovnobezky = abs(max(pzelva) - min(pzelva))
 # Pomoci screensize se vygeneruje dostatecne velke okno
 screensize(delka_rovnobezky + 100, delka_poledniku + 100)
 for i in range(37):
-
     penup()
     pencolor("black")
     if i == 18:
