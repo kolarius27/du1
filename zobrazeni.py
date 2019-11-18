@@ -128,7 +128,7 @@ while True:
 # Vytvari se list poledniky pro nasledny print a pzelva pro turtle graphics
 poledniky = []
 pzelva = []
-for delka in range(-180, 180, 10):
+for delka in range(-180, 190, 10):
     # Generuje poledniky po 10° a nasledne vypocte souradnice x pomoci funkce vypocet_souradnice_x
     xround = vypocet_souradnice_x(delka, meritko, polomer_zeme)
     # Prirazeni do listu pzelva
@@ -142,7 +142,7 @@ for delka in range(-180, 180, 10):
 # Vytvari se dva listy, rovnobezky pro nasledny print a rzelva pro turtle graphics
 rovnobezky = []
 rzelva = []
-for sirka in range (-90, 90, 10):
+for sirka in range(-90, 100, 10):
     # Generuje rovnobezky po 10° a nasledne vypocte souradnice y pomoci funkce vypocet_souradnice_y
     yround = vypocet_souradnice_y(sirka, zobrazeni, meritko, polomer_zeme)
     # Prirazeni do listu pzelva, osetruji se nekonecna u Mercatorova zobrazeni
