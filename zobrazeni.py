@@ -55,13 +55,12 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
         # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
         penup()
         pencolor("black")
+        setpos(pzelva[0], rzelva[j])
+        seth(0)
         if j == 9:
             # rovnik je zobrazen cervene
             pencolor("red")
-        if zobrazeni != "M" and j != 0 or j != 19:
-            # u Mercatora se nevykresluji poly
-            setpos(pzelva[0], rzelva[j])
-            seth(0)
+        if not zobrazeni == "M" or not j == 0 and not j == 18:
             pendown()
             forward(delka_rovnobezky)
     for k in range(len(bodyX)):
@@ -88,7 +87,7 @@ while zobrazeni not in spravne_zobrazeni:
     zobrazeni = input("Zadejte zobrazení: ")
 
 
-print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.\n\n")
+print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:100000000, stačí zadat do programu 100000000.\n\n")
 meritko = 0
 while True:
     # opakovane vyvolava input, pokud je vstup neciselny nebo <= 0
