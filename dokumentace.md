@@ -56,7 +56,7 @@ Pro výpočet Braunova zobrazení zadejte písmeno B.
 
 Zadejte zobrazení: L
 
-Dále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.
+Dále je potřeba zadat měřítko. Pokud chcete například měřítko 1:100000000, stačí zadat do programu 100000000.
 
 
 Zadejte měřítko: 50000000
