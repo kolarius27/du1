@@ -59,7 +59,7 @@ Zadejte zobrazení: L
 Dále je potřeba zadat měřítko. Pokud chcete například měřítko 1:1000000000, stačí zadat do programu 1000000000.
 
 
-Zadejte měřítko: 1000000000
+Zadejte měřítko: 50000000
 
 Nyní zadejte poloměr referenční koule, se kterým chcete počítat.
 Pokud chcete počítat s poloměrem 6371,11 km, stačí zadat hodnotu 0.
@@ -70,25 +70,13 @@ Zadejte poloměr Země (v km): 0
 Zde jsou vypsané souřadnice rovnoběžek a poledníků po 10°. 
 V kulatých závorkách naleznete zeměpisnou šířku/délku a vypočtenou souřadnici zobrazení.
 
-Rovnoběžky:  [-6.4, -6.3, -6.0, -5.5, -4.9, -4.1, -3.2, -2.2, -1.1, 0.0, 1.1, 2.2, 3.2, 4.1, 4.9, 5.5, 6.0, 6.3, 6.4]
-Poledníky:  [-20.0, -18.9, -17.8, -16.7, -15.6, -14.5, -13.3, -12.2, -11.1, -10.0, -8.9, -7.8, -6.7, -5.6, -4.4, -3.3, -2.2, -1.1, 0.0, 1.1, 2.2, 3.3, 4.4, 5.6, 6.7, 7.8, 8.9, 10.0, 11.1, 12.2, 13.3, 14.5, 15.6, 16.7, 17.8, 18.9, 20.0]
+Rovnoběžky:  [-12.7, -12.5, -12.0, -11.0, -9.8, -8.2, -6.4, -4.4, -2.2, 0.0, 2.2, 4.4, 6.4, 8.2, 9.8, 11.0, 12.0, 12.5, 12.7]
+Poledníky:  [-40.0, -37.8, -35.6, -33.4, -31.1, -28.9, -26.7, -24.5, -22.2, -20.0, -17.8, -15.6, -13.3, -11.1, -8.9, -6.7, -4.4, -2.2, 0.0, 2.2, 4.4, 6.7, 8.9, 11.1, 13.3, 15.6, 17.8, 20.0, 22.2, 24.5, 26.7, 28.9, 31.1, 33.4, 35.6, 37.8, 40.0]
 
 
 Pokud vám toto nestačí, nyní máte možnost vypočítat konkrétní body.
 Při zadání bodu (0,0) program přejde na vykreslení souřadnicové sítě želví grafikou.
 
-Vložte zeměpisnou šířku: 90
-Vložte zeměpisnou délku: 180
-Souřadnice hledaného bodu jsou: ( 20.0 , 6.4 )
-Vložte zeměpisnou šířku: 90
-Vložte zeměpisnou délku: -180
-Souřadnice hledaného bodu jsou: ( -20.0 , 6.4 )
-Vložte zeměpisnou šířku: -90
-Vložte zeměpisnou délku: 180
-Souřadnice hledaného bodu jsou: ( 20.0 , -6.4 )
-Vložte zeměpisnou šířku: -90
-Vložte zeměpisnou délku: -180
-Souřadnice hledaného bodu jsou: ( -20.0 , -6.4 )
 Vložte zeměpisnou šířku: 0
 Vložte zeměpisnou délku: 0
 Souřadnice hledaného bodu jsou: ( 0.0 , 0.0 )
