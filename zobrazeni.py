@@ -51,6 +51,7 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
         seth(90)
         pendown()
         forward(delka_poledniku)
+        penup()
     for j in range(19):
         # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
         penup()
@@ -60,9 +61,11 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
         if j == 9:
             # rovnik je zobrazen cervene
             pencolor("red")
-        if not zobrazeni == "M" or not j == 0 and not j == 18:
-            pendown()
-            forward(delka_rovnobezky)
+        if zobrazeni == "M" and (j == 0 or j == 18):
+            continue
+        pendown()
+        forward(delka_rovnobezky)
+        penup()
     for k in range(len(bodyX)):
         # Zelva vyznaci konkretni body vyhledane uzivatelem modrou teckou
         speed(1)
@@ -70,6 +73,7 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
         setpos(bodyX[k], bodyY[k])
         pendown()
         dot(10, "blue")
+        penup()
     exitonclick()
 
 
@@ -178,18 +182,15 @@ while True:
             print("Chybný vstup! Zadej znovu!")
             xvstup = float(input("Vložte zeměpisnou délku: "))
         # Do promenne souradnice se zapisuji vstupni hodnoty pro mozne skonceni while cycle
-        souradnice_xy = (yvstup,xvstup)
+        souradnice_xy = (yvstup, xvstup)
         # Vypocet souradnic pomoci vyse vytvorenych funkci, osetruji se nekonecna u Mercatorova zobrazeni
-        ybod = vypocet_souradnice_y(yvstup,zobrazeni,meritko,polomer_zeme)
-        if ybod == inf:
-            bodyY.append(vypocet_souradnice_y(85.051129, zobrazeni, meritko, polomer_zeme)*10)
-        elif ybod == -inf:
-            bodyY.append(vypocet_souradnice_y(-85.051129, zobrazeni, meritko, polomer_zeme)*10)
-        else:
-            bodyY.append(ybod * 10)
-        xbod = vypocet_souradnice_x(xvstup,meritko,polomer_zeme)
+        ybod = vypocet_souradnice_y(yvstup, zobrazeni, meritko, polomer_zeme)
+        xbod = vypocet_souradnice_x(xvstup, meritko, polomer_zeme)
+        print("Souřadnice hledaného bodu jsou: (", ybod, ",", xbod, ")")
+        if abs(ybod) == inf:
+            continue
+        bodyY.append(ybod * 10)
         bodyX.append(xbod * 10)
-        print("Souřadnice hledaného bodu jsou: (", xbod, ",", ybod, ")")
     except ValueError:
         # Pri neciselnem vstupu je opet vyvolana funkce input
         print("Chybný vstup! Zadej znovu!")
