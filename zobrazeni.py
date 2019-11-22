@@ -113,7 +113,7 @@ while True:
         if polomer_zeme < 0:
             # Pri vstupu r < 0 je opet vyvolana funkce input
             print("Chybný vstup! Zadej znovu!")
-            polomer_zeme = float(input("Zadejte poloměr Země (v km): "))
+            continue
         elif polomer_zeme == 0:
             # Pri vstupu r = 0 je promenne prirazena konstanta
             polomer_zeme = 6371.11
