@@ -1,4 +1,4 @@
-# zobrazení.py
+# zobrazeni.py
 
 ## Co program dělá?
 
