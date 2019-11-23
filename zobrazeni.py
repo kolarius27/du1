@@ -40,8 +40,8 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
     delka_rovnobezky = abs(max(pzelva) - min(pzelva))
     # Pomoci screensize se vygeneruje dostatecne velke okno
     screensize(delka_rovnobezky + 100, delka_poledniku + 100)
+    penup()
     for i in range(37):
-        penup()
         pencolor("black")
         if i == 18:
             # nulty polednik je zobrazen cervene
@@ -54,7 +54,6 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
         penup()
     for j in range(19):
         # Zelva je umistena do bodu s nejnizsimi hodnotami souradnic a jsou vygenerovany rovnobezky
-        penup()
         pencolor("black")
         setpos(pzelva[0], rzelva[j])
         seth(0)
@@ -69,7 +68,6 @@ def vykresleni_site(pzelva, rzelva, bodyX, bodyY, zobrazeni):
     for k in range(len(bodyX)):
         # Zelva vyznaci konkretni body vyhledane uzivatelem modrou teckou
         speed(1)
-        penup()
         setpos(bodyX[k], bodyY[k])
         pendown()
         dot(10, "blue")
