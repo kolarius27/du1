@@ -12,7 +12,6 @@ def vypocet_souradnice_x(delka, meritko, polomer_zeme):
 def vypocet_souradnice_y(sirka, zobrazeni, meritko, polomer_zeme):
     # Prevod vstupu na radiany a vytvoreni promenne souradnice_y
     sirka_rad = radians(sirka)
-    souradnice_y = float()
     # Vypocet promenne souradnice_y v zavislosti na zadanem parametru zobrazeni
     if zobrazeni == "L":
         souradnice_y = float(polomer_zeme * sin(sirka_rad) * 100000 / meritko)
@@ -90,7 +89,6 @@ while zobrazeni not in spravne_zobrazeni:
 
 
 print("\nDále je potřeba zadat měřítko. Pokud chcete například měřítko 1:100000000, stačí zadat do programu 100000000.\n\n")
-meritko = 0
 while True:
     # opakovane vyvolava input, pokud je vstup neciselny nebo <= 0
     try:
@@ -107,7 +105,6 @@ while True:
 
 print("\nNyní zadejte poloměr referenční koule, se kterým chcete počítat.\n"
       "Pokud chcete počítat s poloměrem 6371,11 km, stačí zadat hodnotu 0.\n\n")
-polomer_zeme = float()
 while True:
     try:
         # Opakovane se vyvolava funkce input
